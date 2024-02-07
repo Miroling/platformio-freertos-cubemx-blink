@@ -22,6 +22,8 @@
 #include "task.h"
 #include "main.h"
 #include "cmsis_os.h"
+#include "usart.h"
+#include "string.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -129,7 +131,7 @@ void StartLedTask(void *argument)
   for(;;)
   {
     HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_5);
-    osDelay(1000);
+    osDelay(500);
   }
   /* USER CODE END StartLedTask */
 }
@@ -144,11 +146,17 @@ void StartLedTask(void *argument)
 void StartUartTask(void *argument)
 {
   /* USER CODE BEGIN StartUartTask */
+
+  char buffer[16];
+
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    sprintf(buffer, "Test\n");
+    HAL_UART_Transmit(&huart2, buffer, strlen(buffer), 1000);
+    osDelay(2000);
   }
+	  				  
   /* USER CODE END StartUartTask */
 }
 
